@@ -1,12 +1,17 @@
 [
   {
-    "id": 2,
-    "description": "Tugas CLI",
-    "completed": true
+    "id": 1,
+    "description": "Masak Ayam",
+    "completed": false
   },
   {
-    "id": 3,
-    "description": "Tugas Pemweb",
-    "completed": true
+    "id": 2,
+    "description": "Masak Ikan",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "description": "Tugas Animasi",
+    "completed": false
   }
 ]

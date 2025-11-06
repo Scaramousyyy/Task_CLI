@@ -7,38 +7,19 @@ const filePath = path.resolve("./tasks.json");
 async function readTasks() {
   try {
     const data = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(data);
-  } catch (err) {
-    // Jika file belum ada, kembalikan array kosong
-    if (err.code === "ENOENT") return [];
-    throw err;
+    const tasks = JSON.parse(data);
+    // Urutkan berdasarkan ID agar selalu rapi
+    return tasks.sort((a, b) => a.id - b.id);
+  } catch {
+    return [];
   }
 }
 
 // Menulis data ke file JSON
 async function writeTasks(tasks) {
-  try {
-    await fs.writeFile(filePath, JSON.stringify(tasks, null, 2), "utf-8");
-  } catch (err) {
-    throw err;
-  }
-}
-
-// Menambah tugas baru
-export async function addTask(description) {
-  try {
-    const tasks = await readTasks();
-    const newTask = {
-      id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
-      description,
-      completed: false,
-    };
-    tasks.push(newTask);
-    await writeTasks(tasks);
-    console.log(`✅ Tugas "${description}" berhasil ditambahkan!`);
-  } catch (err) {
-    console.error("❌ Gagal menambah tugas:", err.message);
-  }
+  // Pastikan tersimpan dalam urutan ID yang benar
+  const sorted = tasks.sort((a, b) => a.id - b.id);
+  await fs.writeFile(filePath, JSON.stringify(sorted, null, 2));
 }
 
 // Menampilkan semua tugas
@@ -58,6 +39,32 @@ export async function listTasks() {
     });
   } catch (err) {
     console.error("❌ Gagal menampilkan tugas:", err.message);
+  }
+}
+
+// Menambah tugas baru
+export async function addTask(description) {
+  try {
+    const tasks = await readTasks();
+
+    // Cari ID yang kosong
+    const existingIds = tasks.map((t) => t.id);
+    let newId = 1;
+    while (existingIds.includes(newId)) {
+      newId++;
+    }
+
+    const newTask = {
+      id: newId,
+      description,
+      completed: false,
+    };
+
+    tasks.push(newTask);
+    await writeTasks(tasks);
+    console.log(`✅ Tugas "${description}" berhasil ditambahkan!`);
+  } catch (err) {
+    console.error("❌ Gagal menambah tugas:", err.message);
   }
 }
 
