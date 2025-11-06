@@ -2,6 +2,11 @@
   {
     "id": 1,
     "description": "Makan Malam",
+    "completed": true
+  },
+  {
+    "id": 2,
+    "description": "Tugas CLO",
     "completed": false
   }
 ]

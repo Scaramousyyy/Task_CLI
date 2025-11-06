@@ -91,3 +91,55 @@ export function deleteTask(id) {
     });
   });
 }
+
+// Menandai tugas selesai
+export function markTaskDone(id) {
+  readTasks((err, tasks) => {
+    if (err) {
+      console.error("Gagal membaca data:", err.message);
+      return;
+    }
+
+    const task = tasks.find((t) => t.id === id);
+    if (!task) {
+      console.log("⚠️ Tugas tidak ditemukan.");
+      return;
+    }
+
+    if (task.completed) {
+      console.log(`ℹ️ Tugas "${task.description}" sudah ditandai selesai sebelumnya.`);
+      return;
+    }
+
+    task.completed = true;
+
+    writeTasks(tasks, (err) => {
+      if (err) console.error("Gagal memperbarui data:", err.message);
+      else console.log(`🎯 Tugas "${task.description}" telah ditandai selesai!`);
+    });
+  });
+}
+
+// Mengedit nama tugas
+export function editTask(id, newDescription) {
+  readTasks((err, tasks) => {
+    if (err) {
+      console.error("Gagal membaca data:", err.message);
+      return;
+    }
+
+    const task = tasks.find((t) => t.id === id);
+    if (!task) {
+      console.log("⚠️ Tugas tidak ditemukan.");
+      return;
+    }
+
+    const oldDescription = task.description;
+    task.description = newDescription;
+
+    writeTasks(tasks, (err) => {
+      if (err) console.error("Gagal memperbarui data:", err.message);
+      else console.log(`✏️ Tugas "${oldDescription}" telah diubah menjadi "${newDescription}".`);
+    });
+  });
+}
