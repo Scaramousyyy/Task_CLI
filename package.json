@@ -1,0 +1,12 @@
+{
+  "name": "cli-task-manager",
+  "version": "1.0.0",
+  "description": "A simple CLI task manager using Node.js and JSON file storage",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Muh. Rahmatullah Setiawan",
+  "license": "ISC"
+}
