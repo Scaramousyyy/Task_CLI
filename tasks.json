@@ -1,12 +1,12 @@
 [
   {
-    "id": 1,
-    "description": "Makan Malam",
+    "id": 2,
+    "description": "Tugas CLI",
     "completed": true
   },
   {
-    "id": 2,
-    "description": "Tugas CLI",
-    "completed": false
+    "id": 3,
+    "description": "Tugas Pemweb",
+    "completed": true
   }
 ]
